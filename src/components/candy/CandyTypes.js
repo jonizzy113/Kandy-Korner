@@ -1,4 +1,4 @@
-import React, { Component } from "react"
+
 
 // export default class CandyTypes extends Component {
 //     render() {
