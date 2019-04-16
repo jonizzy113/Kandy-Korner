@@ -2,8 +2,11 @@ import { Route } from 'react-router-dom'
 import React, { Component } from "react"
 import LoactionList from "./location/LoactionList"
 import Employees from "./employee/Employees"
-// import CandyTypes from "./candy/CandyTypes"
 import CandyList from "./Candies/CandyList"
+import LocationManager from "../modules/LocationManager"
+import EmployeeManager from "../modules/EmployeeManager"
+import CandyManager from "../modules/CandyManager"
+import CandyTypeManager from "../modules/CandyTypeManager"
 
 
 export default class ApplicationViews extends Component {
@@ -17,17 +20,13 @@ export default class ApplicationViews extends Component {
     componentDidMount() {
         const newState = {}
 
-        fetch("http://localhost:8088/locations")
-            .then(r => r.json())
+        LocationManager.getAll()
             .then(locations => newState.locations = locations)
-            .then(() => fetch("http://localhost:8088/employees")
-                .then(r => r.json()))
+        EmployeeManager.getAll()
             .then(employees => newState.employees = employees)
-            .then(() => fetch("http://localhost:8088/candyTypes")
-                .then(r => r.json()))
+        CandyTypeManager.getAll()
             .then(candyTypes => newState.candyTypes = candyTypes)
-            .then(() => fetch("http://localhost:8088/individualCandies")
-                .then(r => r.json()))
+        CandyManager.getAll()
             .then(candies => newState.candies = candies)
             .then(() => this.setState(newState))
     }
