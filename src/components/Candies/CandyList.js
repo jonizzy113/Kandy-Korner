@@ -1,4 +1,5 @@
 import React, { Component } from "react"
+import {  Link } from "react-router-dom"
 
 
 
@@ -9,7 +10,7 @@ export default class IndividualCandy extends Component {
                 <h1>Candies</h1>
                 {
                     this.props.candies.map(candy => 
-                        <div key={candy.id}>
+                        <div key={candy.id} className="card">
                             {candy.name}
                             {" "}of type{" "}
                             {
@@ -19,6 +20,7 @@ export default class IndividualCandy extends Component {
                             <button
                                     onClick={() => this.props.deleteCandy(candy.id)}
                                     className="card-link">Delete</button>
+                                    <Link className="nav-link" to={`/individualCandies/${candy.id}`}>Details</Link>
                         </div>
                     )
                 }

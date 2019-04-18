@@ -6,5 +6,11 @@ export default {
     },
     getAll() {
         return fetch(`${url}/locations`).then(l => l.json())
+    },
+    delete(id) {
+        return fetch(`${url}/locations/${id}`, {
+            method: "DELETE"
+        })
+        .then(l => l.json())
     }
 }

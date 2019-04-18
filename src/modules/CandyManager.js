@@ -7,5 +7,11 @@ export default {
     },
     getAll() {
         return fetch(`${url}/individualCandies`).then(l => l.json())
+    },
+    delete(id) {
+        return fetch(`${url}/individualCandies/${id}`, {
+            method: "DELETE"
+        })
+        .then(l => l.json())
     }
 }
