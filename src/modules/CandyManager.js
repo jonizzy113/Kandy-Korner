@@ -13,5 +13,14 @@ export default {
             method: "DELETE"
         })
         .then(l => l.json())
+    },
+    postCandy(newCandy) {
+        return fetch(`${url}/individualCandies`, {
+            method:"POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(newCandy)
+        }).then(data => data.json())
     }
 }

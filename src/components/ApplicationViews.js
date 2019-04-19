@@ -12,6 +12,7 @@ import LocationDetail from "./location/LocationDetail"
 import CandyDetail from "./Candies/CandiesDetail"
 import EmployeeForm from "./employee/EmployeeForm"
 import { withRouter } from 'react-router'
+import CandyForm from './Candies/CandiesForm';
 
 
 class ApplicationViews extends Component {
@@ -71,6 +72,15 @@ class ApplicationViews extends Component {
             })
     })
 
+    addCandy = newCandy => CandyManager.postCandy(newCandy)
+    .then(() =>console.log(newCandy))
+        .then(() => CandyManager.getAll())
+        .then(candy => {
+            this.setState({
+                candies: candy
+            })
+        })
+
     render() {
         return (
             <React.Fragment>
@@ -87,7 +97,7 @@ class ApplicationViews extends Component {
             }} /> */}
                 <Route exact path="/individualCandies" render={(props) => {
                     return <CandyList deleteCandy={this.deleteCandy}
-                        candies={this.state.candies} candyTypes={this.state.candyTypes} />
+                        candies={this.state.candies} candyTypes={this.state.candyTypes} {...props}/>
                 }} />
                 <Route path="/employees/:employeeId(\d+)" render={(props) => {
                     let employee = this.state.employees.find(employee =>
@@ -122,6 +132,11 @@ class ApplicationViews extends Component {
                 <Route path="/employees/new" render={(props) => {
                     return <EmployeeForm {...props}
                     addEmployee={this.addEmployee} />
+                }}/>
+                <Route path="/individualCandies/new" render={(props) => {
+                    return <CandyForm {...props}
+                    addCandy={this.addCandy}
+                    candyTypes={this.state.candyTypes}/>
                 }}/>
             </React.Fragment>
         )

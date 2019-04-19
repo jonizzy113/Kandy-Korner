@@ -6,6 +6,17 @@ import {  Link } from "react-router-dom"
 export default class IndividualCandy extends Component {
     render() {
         return (
+            <React.Fragment>
+            <div className="candyButton content">
+                    <button type="button"
+                        className="btn btn-success"
+                        onClick={() => {
+                            this.props.history.push("/individualCandies/new")
+                        }
+                        }>
+                        New Candy
+                    </button>
+                    </div>
             <article className="content">
                 <h1>Candies</h1>
                 {
@@ -25,6 +36,7 @@ export default class IndividualCandy extends Component {
                     )
                 }
             </article>
+            </React.Fragment>
         )
     }
 }
