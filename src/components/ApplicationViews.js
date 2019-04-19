@@ -1,4 +1,4 @@
-import { Route } from 'react-router-dom'
+import { Route, Redirect } from 'react-router-dom'
 import React, { Component } from "react"
 import LoactionList from "./location/LoactionList"
 import Employees from "./employee/Employees"
@@ -13,9 +13,13 @@ import CandyDetail from "./Candies/CandiesDetail"
 import EmployeeForm from "./employee/EmployeeForm"
 import { withRouter } from 'react-router'
 import CandyForm from './Candies/CandiesForm';
+import login from "./authentication/login"
 
 
 class ApplicationViews extends Component {
+
+    isAuthenticated = () => sessionStorage.getItem("credentials") !== null
+
     state = {
         locations: [],
         employees: [],
@@ -85,19 +89,31 @@ class ApplicationViews extends Component {
         return (
             <React.Fragment>
                 <Route exact path="/" render={(props) => {
+                    if(this.isAuthenticated())  {
                     return <LoactionList deleteLocation={this.deleteLocation}
                     locations={this.state.locations} />
+                    } else {
+                        return <Redirect to="/login" />
+                    }
                 }} />
                 <Route  exact path="/employees" render={(props) => {
+                    if(this.isAuthenticated()) {
                     return <Employees deleteEmployee={this.deleteEmployee}
                     employees={this.state.employees} {...props}/>
+                    } else {
+                        return <Redirect to ="/login" />
+                    }
                 }} />
                 {/* <Route path="/CandyTypes" render={(props) => {
                 return <CandyTypes candyTypes={this.state.candyTypes} />
             }} /> */}
                 <Route exact path="/individualCandies" render={(props) => {
+                    if(this.isAuthenticated()) {
                     return <CandyList deleteCandy={this.deleteCandy}
                         candies={this.state.candies} candyTypes={this.state.candyTypes} {...props}/>
+                    } else {
+                        return <Redirect to="/login" />
+                    }
                 }} />
                 <Route path="/employees/:employeeId(\d+)" render={(props) => {
                     let employee = this.state.employees.find(employee =>
@@ -138,6 +154,7 @@ class ApplicationViews extends Component {
                     addCandy={this.addCandy}
                     candyTypes={this.state.candyTypes}/>
                 }}/>
+                <Route path="/login" component={login} />
             </React.Fragment>
         )
     }
